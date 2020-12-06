@@ -1,4 +1,4 @@
-import settings
+from . import settings
 import requests
 from bs4 import BeautifulSoup
 
@@ -81,6 +81,4 @@ def cooljugate(lang, verb):
 
 
 
-# my_results = cooljugate('enf', 'think')
-
-# print(my_results)
+# cooljugate('en', 'think')

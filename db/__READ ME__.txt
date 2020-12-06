@@ -1,0 +1,14 @@
+For every language dir there should be the following lists as .txt files:
+
+	*_adjectives
+	*_nouns
+	*_verbs
+	*_phrasalverbs
+
+Only save such files here once they are complete.
+
+
+
+To list all files in this directory, open cmd and run
+
+	tree /f

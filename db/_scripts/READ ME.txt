@@ -1,1 +1,0 @@
-This dir contains the scripts used to webscrape the data which is to be added to our Database. 

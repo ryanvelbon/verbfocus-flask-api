@@ -1,7 +1,7 @@
 import pytest
 import os
 
-from pkgs.lang.sentence_proc import sentences_count
+from pkgs.lang.file_proc import sentences_count
 
 
 def test_sentences_count():

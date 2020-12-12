@@ -15,6 +15,9 @@ def test_exists():
 
 	assert exists("cinta", "German") == False
 	assert exists("cinta", "French") == False
+
+	assert exists("güneş", "Turkish") == True
+	
 	
 
 if __name__ == "__main__":

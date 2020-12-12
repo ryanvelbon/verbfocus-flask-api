@@ -1,4 +1,6 @@
 # functions for processing text
+import nltk
+
 
 def fix_casing(s):
 	""" 
@@ -68,3 +70,20 @@ def get_all_chars(text):
 	temp.sort()
 
 	return temp
+
+def get_vocab(text):
+
+	tokens = nltk.word_tokenize(text.lower())
+
+	temp = set(tokens)
+
+	vocab = []
+
+	for item in temp:
+		vocab.append(item)
+
+	vocab.sort()
+
+	return vocab
+
+

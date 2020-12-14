@@ -53,7 +53,7 @@ def exists(word, lang):
 		return False
 
 
-def get_all_vconj(verb, lang):
+def scrape_all_vconj(verb, lang):
     """
     Parameters
     ----------
@@ -88,7 +88,8 @@ def get_all_vconj(verb, lang):
             break
 
     if 'conj_header' not in locals():   
-        print("BeautifulSoup failed to find the 'Conjugation' section for :   {}".format(verb))\
+        raise ValueError("BeautifulSoup failed to find the 'Conjugation' section for :   {}".format(verb))
+        # return None
         # abort
 
     conj_div = conj_header.find_next_sibling("div")
@@ -110,8 +111,4 @@ def get_all_vconj(verb, lang):
         conjs.append(conj)
 
     return conjs
-
-
-def seed_vconj_table_for_verb(verb, lang):
-    pass
 

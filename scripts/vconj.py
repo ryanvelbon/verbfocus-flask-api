@@ -1,7 +1,7 @@
 """
 	conjugates every verb for any given language
 
-	uses en_verbs to produce en_vconjs
+	uses en_verb to produce en_vconj
 """
 
 import os, sys

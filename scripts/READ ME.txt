@@ -1,0 +1,10 @@
+dbseed_*_verb.txt
+
+	A compilation of all verbs for a given language (represented in filename by *).
+	This file is used for the initial seeding of *.verb table
+
+dbseed_*_noun.txt
+
+	similar to above but for *.noun table
+
+

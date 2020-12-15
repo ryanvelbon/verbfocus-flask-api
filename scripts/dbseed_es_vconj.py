@@ -92,7 +92,7 @@ if __name__ == "__main__":
 
     cursor.execute("TRUNCATE TABLE vconj")
 
-    for result in results[210:]:
+    for result in results[2100:]:
 
         if(w.exists(result['title'], 'Spanish')):
             

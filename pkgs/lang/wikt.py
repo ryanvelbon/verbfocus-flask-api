@@ -80,12 +80,20 @@ def scrape_all_vconj(verb, lang):
     req = requests.get(url, headers)
     soup = BeautifulSoup(req.content, 'html.parser')
 
-    lang_header = soup.find(lambda tag:tag.name=="h2" and lang in tag.text)
+    # to avoid mistakenly web scraping "Old Spanish" section instead of "Spanish"
+    # we scan the h2 element's text to see that it contains this unique HTML code
+    x = '<span class="mw-headline" id="{}">{}</span>'.format(lang, lang)
+
+    lang_header = soup.find(lambda tag:tag.name=="h2" and x in str(tag))
 
     for h4_tag in lang_header.find_next_siblings('h4'):
         if "Conjugation" in h4_tag.text:
             conj_header = h4_tag
             break
+
+    # REVIEW: perhaps above forloop can be written something like this:
+    # conj_header = soup.find_next_siblings(lambda tag:tag.name=="h4" and "Conjugation" in tag.text)
+
 
     # if Conjugation h4 tag not found, scan the h5 tags
     if 'conj_header' not in locals():
@@ -100,8 +108,8 @@ def scrape_all_vconj(verb, lang):
     # if neither h4 nor h5 tag found for Conjugation
     if 'conj_header' not in locals():
         if(verb.endswith("se")):
-            print("{} \n Searching {} instead".format(
-                conj_not_found_error, verb.removesuffix('se')))
+            # print("{} \n Searching {} instead".format(
+            #     conj_not_found_error, verb.removesuffix('se')))
             try:
                 return scrape_all_vconj(verb.removesuffix('se'), lang)
             except ValueError as err:
@@ -114,7 +122,6 @@ def scrape_all_vconj(verb, lang):
             # abort
 
     conj_div = conj_header.find_next_sibling("div")
-    # td_tags = conj_div.find_all("td")
 
     conj_content_div = conj_div.find("div", {"class": "NavContent"})
     td_tags = conj_content_div.find_all("td")
@@ -128,6 +135,7 @@ def scrape_all_vconj(verb, lang):
     for td_tag in td_tags:
 
         span_tag = td_tag.find("span")
+
 
         conj = span_tag.text.strip()
 

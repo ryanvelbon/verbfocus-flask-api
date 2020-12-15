@@ -1,9 +1,9 @@
-DROP SCHEMA `polly_es`;
+DROP SCHEMA `es`;
 
-CREATE SCHEMA `polly_es` CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_as_ci;
+CREATE SCHEMA `es` CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_as_ci;
 
 
-USE `polly_es`;
+USE `es`;
 
 
 
@@ -51,3 +51,16 @@ CREATE TABLE sentence (
 	UNIQUE (title)
 );
 
+-- Language-Specific Tables
+
+-- Verb Past Participles & Gerund
+CREATE TABLE vppg (
+	verb_id SMALLINT UNSIGNED,
+	gerund varchar(25),
+	ms varchar(25),
+	fs varchar(25),
+	mp varchar(25),
+	fp varchar(25),
+	PRIMARY KEY (verb_id),
+	FOREIGN KEY (verb_id) REFERENCES verb(id)
+);

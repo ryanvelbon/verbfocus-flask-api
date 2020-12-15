@@ -893,7 +893,6 @@ empapelar
 empaquetar
 empastar
 empatar
-empedernir
 empeorar
 empezar
 empeñar

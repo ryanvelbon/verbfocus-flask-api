@@ -6,7 +6,7 @@ db = mysql.connector.connect(
   host="localhost",
   user="root",
   password="12345678",
-  database="polly_es",
+  # database="es", example it en de etc.
   use_unicode=True,
   charset="utf8",
 )

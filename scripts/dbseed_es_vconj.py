@@ -88,11 +88,41 @@ if __name__ == "__main__":
     results = cursor.fetchall()
 
 
+
+
+    # ----------------------------------------------------------------------------
+    # for testing, uncomment this section
+    # below is a list of verbs which failed to be conjugated
+
+    results = []
+
+    ids_of_verbs_which_failed = [
+                378,
+                821,
+                1184,
+                1614,
+                1637,
+                2019,
+
+                896, # conj_div is None line 126
+                2025, # div_tag is None line 142 --- h4 Venetian lol ---
+                2105,
+    ]
+
+    for i in ids_of_verbs_which_failed:
+        cursor.execute("SELECT id, title FROM verb WHERE id={}".format(i))
+        results.append(cursor.fetchone())
+
+
+    # ----------------------------------------------------------------------------
+
     not_found = [] # a list of verbs which weren't found
 
     cursor.execute("TRUNCATE TABLE vconj")
 
-    for result in results[2100:]:
+    print("Warning! If this script freezes, restart PC. There is a problem pending diagnosis. Possibly something concering cache or RAM")
+
+    for result in results:
 
         if(w.exists(result['title'], 'Spanish')):
             

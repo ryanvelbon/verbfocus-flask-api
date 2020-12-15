@@ -102,6 +102,13 @@ def scrape_all_vconj(verb, lang):
                 conj_header = h5_tag
                 break
 
+    # print(conj_header)
+
+
+
+
+
+
 
     conj_not_found_error = "BeautifulSoup failed to find the Conjugation section for :   {}".format(verb)
 
@@ -118,7 +125,7 @@ def scrape_all_vconj(verb, lang):
             # return
         else:
             raise ValueError(conj_not_found_error)
-            # return None
+            # return # is this necessary?
             # abort
 
     conj_div = conj_header.find_next_sibling("div")
@@ -132,13 +139,19 @@ def scrape_all_vconj(verb, lang):
 
     conjs = []
 
+    # conjugations without a hyperlink are inside a <div> tag instead of <span>
     for td_tag in td_tags:
+
+        # print(td_tag.text)
 
         span_tag = td_tag.find("span")
 
-
-        conj = span_tag.text.strip()
-
+        if span_tag is None:
+            div_tag = td_tag.find("div")
+            conj = div_tag.text.strip()
+        else:
+            conj = span_tag.text.strip()
+            
         conjs.append(conj)
 
     return conjs

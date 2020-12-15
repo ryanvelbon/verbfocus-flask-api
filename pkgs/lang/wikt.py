@@ -86,29 +86,15 @@ def scrape_all_vconj(verb, lang):
 
     lang_header = soup.find(lambda tag:tag.name=="h2" and x in str(tag))
 
-    for h4_tag in lang_header.find_next_siblings('h4'):
-        if "Conjugation" in h4_tag.text:
-            conj_header = h4_tag
-            break
-
-    # REVIEW: perhaps above forloop can be written something like this:
-    # conj_header = soup.find_next_siblings(lambda tag:tag.name=="h4" and "Conjugation" in tag.text)
+    # print(lang_header)
 
 
-    # if Conjugation h4 tag not found, scan the h5 tags
-    if 'conj_header' not in locals():
-        for h5_tag in lang_header.find_next_siblings('h5'):
-            if "Conjugation" in h5_tag.text:
-                conj_header = h5_tag
-                break
-
-    # print(conj_header)
-
-
-
-
-
-
+    for h in lang_header.find_next_siblings(['h4', 'h5']):
+        if "Conjugation" in h.text:
+            td_sample = h.find_next_sibling("div").find("div", {"class": "NavContent"}).find_all("td")[0]
+            if "#{}".format(lang) in str(td_sample):
+                conj_header = h
+                break # break out of loop
 
     conj_not_found_error = "BeautifulSoup failed to find the Conjugation section for :   {}".format(verb)
 

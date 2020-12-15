@@ -90,31 +90,29 @@ if __name__ == "__main__":
 
 
 
-    # ----------------------------------------------------------------------------
-    # for testing, uncomment this section
-    # below is a list of verbs which failed to be conjugated
+    # # ----------------------------------------------------------------------------
+    # # for testing, uncomment this section
+    # # below is a list of verbs which failed to be conjugated
 
-    results = []
+    # results = []
 
-    ids_of_verbs_which_failed = [
-                378,
-                821,
-                1184,
-                1614,
-                1637,
-                2019,
+    # ids_of_verbs_which_failed = [
+    #             378,
+    #             821,
+    #             1184,
+    #             1614,
+    #             1637,
+    #             2019,
+    #             896, # conj_div is None line 126
+    #             2025, 2105, # resolved : was scraping wrong language Conjugation header
+    # ]
 
-                896, # conj_div is None line 126
-                2025, # div_tag is None line 142 --- h4 Venetian lol ---
-                2105,
-    ]
-
-    for i in ids_of_verbs_which_failed:
-        cursor.execute("SELECT id, title FROM verb WHERE id={}".format(i))
-        results.append(cursor.fetchone())
+    # for i in ids_of_verbs_which_failed:
+    #     cursor.execute("SELECT id, title FROM verb WHERE id={}".format(i))
+    #     results.append(cursor.fetchone())
 
 
-    # ----------------------------------------------------------------------------
+    # # ----------------------------------------------------------------------------
 
     not_found = [] # a list of verbs which weren't found
 

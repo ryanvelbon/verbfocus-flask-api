@@ -6,6 +6,8 @@
 import requests
 from bs4 import BeautifulSoup
 
+import re
+
 headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET',
@@ -80,21 +82,42 @@ def scrape_all_vconj(verb, lang):
 
     lang_header = soup.find(lambda tag:tag.name=="h2" and lang in tag.text)
 
-    h4_tags = lang_header.find_next_siblings('h4')
-
-    for h4_tag in h4_tags:
+    for h4_tag in lang_header.find_next_siblings('h4'):
         if "Conjugation" in h4_tag.text:
             conj_header = h4_tag
             break
 
-    if 'conj_header' not in locals():   
-        raise ValueError("BeautifulSoup failed to find the 'Conjugation' section for :   {}".format(verb))
-        # return None
-        # abort
+    # if Conjugation h4 tag not found, scan the h5 tags
+    if 'conj_header' not in locals():
+        for h5_tag in lang_header.find_next_siblings('h5'):
+            if "Conjugation" in h5_tag.text:
+                conj_header = h5_tag
+                break
+
+
+    conj_not_found_error = "BeautifulSoup failed to find the Conjugation section for :   {}".format(verb)
+
+    # if neither h4 nor h5 tag found for Conjugation
+    if 'conj_header' not in locals():
+        if(verb.endswith("se")):
+            print("{} \n Searching {} instead".format(
+                conj_not_found_error, verb.removesuffix('se')))
+            try:
+                return scrape_all_vconj(verb.removesuffix('se'), lang)
+            except ValueError as err:
+                print(err.args)
+                return
+            # return
+        else:
+            raise ValueError(conj_not_found_error)
+            # return None
+            # abort
 
     conj_div = conj_header.find_next_sibling("div")
+    # td_tags = conj_div.find_all("td")
 
-    td_tags = conj_div.find_all("td")
+    conj_content_div = conj_div.find("div", {"class": "NavContent"})
+    td_tags = conj_content_div.find_all("td")
 
     for index, item in enumerate(td_tags):
         if item.text.strip() == "":

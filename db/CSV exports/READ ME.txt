@@ -1,3 +1,12 @@
 
 
 open with notepad to see UTF8 characters
+
+
+it.verb
+
+	id is according to frequency of verb. The first-most are the most frequently occurring
+
+it.vconj
+
+	it.verbs has 17k+ verbs, only the the top 3k have been conjugated here

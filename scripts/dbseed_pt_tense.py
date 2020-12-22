@@ -4,7 +4,7 @@ db = mysql.connector.connect(
   host="localhost",
   user="root",
   password="12345678",
-  database="fr"
+  database="pt"
 )
 
 cursor = db.cursor()
@@ -14,14 +14,21 @@ val = [
 	('infinitive',),
 	('gerund',),
 	('past participle',),
+
 	('present indicative',),
 	('imperfect indicative',),
-	('past historic indicative',),
+	('preterite indicative',),
+	('pluperfect indicative',),
 	('future indicative',),
+
 	('conditional',),
+
 	('present subjunctive',),
 	('imperfect subjunctive',),
-	('imperative',),
+	('future subjunctive',),
+	
+	('affirmative imperative',),
+	('negative imperative',),
 ]
 
 cursor.executemany(sql, val)

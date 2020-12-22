@@ -7,14 +7,14 @@ db = mysql.connector.connect(
   host="localhost",
   user="root",
   password="12345678",
-  database="de",
+  database="es",
   use_unicode=True,
   charset="utf8",
 )
 
 cursor = db.cursor()
 
-filepath = os.path.join(os.path.dirname(__file__),'coolj_de_verbs.txt')
+filepath = os.path.join(os.path.dirname(__file__),'sp_verbs_500basicverbs.txt')
 f = io.open(filepath, mode="r", encoding="utf-8")
 
 # rstrip() removes \n and any white space

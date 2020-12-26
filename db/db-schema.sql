@@ -74,6 +74,15 @@ CREATE TABLE gr_sentence (
 	UNIQUE (title)
 );
 
+-- pivot table
+CREATE TABLE sentence_verb (
+	sentence_id SMALLINT UNSIGNED,
+	verb_id SMALLINT UNSIGNED,
+	FOREIGN KEY (sentence_id) REFERENCES sentence(id),
+	FOREIGN KEY (verb_id) REFERENCES verb(id),
+	PRIMARY KEY (sentence_id, verb_id)
+);
+
 
 -- Language-Specific Tables
 

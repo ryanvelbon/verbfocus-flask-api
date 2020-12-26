@@ -1,13 +1,11 @@
 from pkgs.lang.text_proc import VocabTagger
 import mysql.connector
+import sys
 
 
 lang = 'pt'
 
-vt = VocabTagger('pt')
-
-
-
+vt = VocabTagger(lang)
 
 conn = mysql.connector.connect(
     host="localhost",
@@ -19,53 +17,24 @@ conn = mysql.connector.connect(
 )
 
 cursor = conn.cursor(dictionary=True)
-cursor.execute("SELECT * FROM {}.sentence ORDER BY id ASC".format(lang))
+cursor.execute("TRUNCATE TABLE sentence_verb")
+cursor.execute("SELECT * FROM sentence ORDER BY id ASC")
 rows = cursor.fetchall()
 
-for row in rows:
+
+insert_stmt = u"INSERT INTO sentence_verb (sentence_id, verb_id) VALUES (%s, %s)"
+
+
+for sentence in rows:
 	
-	sentence = row['title']
+	verbs = vt.find_verbs(sentence['title'])
 
-	verbs = vt.find_verbs(sentence)
+	for verb in verbs:
+		# handle exception
+		cursor.execute(insert_stmt, (sentence['id'], verb['id']))
 
-	print(sentence)
-	print(verbs)
-
-	print("\n"*2)
-
-
+	sys.stdout.write("\r%d" % sentence['id'])
+	sys.stdout.flush()
 
 
-
-
-
-
-
-
-
-
-# import io
-# import os
-
-# filepath = os.path.join(os.path.dirname(__file__), 'dummy_tr.txt')
-
-# f = io.open(filepath, mode="r", encoding="utf-8")
-	
-# lines = f.readlines()
-
-# for i, sent in enumerate(lines):
-
-# 	print(sent)
-
-# 	# print("{:<10}{:<50}".format(i, sent))
-	
-# 	verbs = vt.find_verbs(sent)
-
-# 	# with VocabTagger() as tp:
-# 	# 	verbs = tp.find_verbs(sent)
-
-# 	print(verbs)
-
-	
-
-# 	print("\n"*3)
+conn.commit()

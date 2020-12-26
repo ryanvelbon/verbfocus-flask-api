@@ -110,11 +110,14 @@ class VocabTagger:
 			password="12345678",
 			database=lang
 			)
-		self._db_cursor = self._db_connection.cursor()
+		self._db_cursor = self._db_connection.cursor(buffered=True, dictionary=True)
 
 
 
 	def find_verbs(self, text):
+		"""
+		
+		"""
 
 		verbs = []
 
@@ -127,10 +130,11 @@ class VocabTagger:
 			result = self._db_cursor.fetchone()
 
 			if result is not None:
-				verb_id = result[0]
-				self._db_cursor.execute("SELECT title FROM verb WHERE id='{}'".format(verb_id))
-				verb_title = self._db_cursor.fetchone()[0]
-				verbs.append(verb_title)
+
+				self._db_cursor.execute("SELECT * FROM verb WHERE id = %s", (result['verb_id'], ))
+				verb = self._db_cursor.fetchone()
+				if verb not in verbs:
+					verbs.append(verb)
 
 		return verbs
 

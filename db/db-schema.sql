@@ -145,4 +145,44 @@ CREATE TABLE pt.vppg (
 	FOREIGN KEY (verb_id) REFERENCES verb(id)
 );
 
+--ADMIN DB--------------------------------------------------------------------------
 
+CREATE SCHEMA admin;
+
+CREATE TABLE admin.contact (
+	id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    first_name varchar(50),
+    last_name varchar(50),
+    nationality varchar(2),
+    email1 varchar(255),
+    email2 varchar(255),
+    phone1 varchar(15),
+    phone2 varchar(15),
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE admin.content_creator (
+	contact_id SMALLINT UNSIGNED,
+	native_lang varchar(2), -- en, es, fr, it ...
+	services_offered varchar(500),
+	fiverr_username varchar(50),
+	PRIMARY KEY (contact_id),
+	FOREIGN KEY (contact_id) REFERENCES admin.contact(id)    
+);
+
+CREATE TABLE admin.job (
+	id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    contact_id SMALLINT UNSIGNED,
+    title varchar(50),
+    description varchar(500),
+    price DECIMAL(20), -- foreign currency
+    currency varchar(5), -- RP
+    price_euro DECIMAL(6,2) NOT NULL, -- actual money paid in euros counting conversion fee and middleman commission
+    paid BIT,
+    deadline DATE,
+    started DATE,
+    delivered DATE,
+    stars TINYINT UNSIGNED, -- 1 to 5 stars
+    PRIMARY KEY (id),
+    FOREIGN KEY (contact_id) REFERENCES admin.contact(id)    
+);

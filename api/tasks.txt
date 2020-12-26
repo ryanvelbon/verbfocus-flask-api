@@ -1,0 +1,16 @@
+
+resources and functionality should be available through your API?
+
+give examples of request URLs or code for your API
+
+for each resource, describe which fields, such as id or title, are accepted
+
+
+Aim for three kinds of documentation for your API:
+
+	a reference that details each route and its behavior
+
+	a guide that explains the reference in prose
+
+	and at least one or two tutorials that explain every step in detail
+

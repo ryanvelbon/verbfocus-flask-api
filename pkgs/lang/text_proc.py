@@ -141,8 +141,8 @@ class VocabTagger:
 		pass
 
 
-	def __del__(self):
-		self._db_connection.close()
+	# def __del__(self):
+	# 	self._db_connection.close()
 
 
 	def __exit__(self, type, value, traceback):
